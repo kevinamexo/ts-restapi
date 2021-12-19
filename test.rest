@@ -1,0 +1,42 @@
+###
+POST http://localhost:8000/api/users
+Content-Type:application/json
+
+{"name":"Kevin Amexo",
+"email":"kevin@mail.com",
+"password":"123ABCd@",
+"passwordConfirmation":"123ABCd@"
+    
+}
+
+
+###
+
+
+
+###
+GET http://localhost:8000/api/sessions
+Authorization:Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWQwMmIzZTQ5YzQ3NTUwOGY3YjJiNzUiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJuYW1lIjoiSmFuZSBEb2UiLCJjcmVhdGVkQXQiOiIyMDIyLTAxLTAxVDEwOjIxOjUwLjUzNVoiLCJ1cGRhdGVkQXQiOiIyMDIyLTAxLTAxVDEwOjIxOjUwLjUzNVoiLCJfX3YiOjAsInNlc3Npb24iOiI2MWQzM2NkMGFiODBlNGEzM2U0ZjAyMDkiLCJpYXQiOjE2NDEyMzM2MTYsImV4cCI6MTY0MTIzNDUxNn0.Co8vPxW3P0yutzAqQLCyL6iqTYp2GaAuABX29pfQ3Ws1njT-iLwMRGQvD5j5v2s7Iv_Vd57PuSdJ2QvAOaEMy4qOic1Lysi4FN-SpAW0BU2JD2x5QTF1ZVn3Qkdq5DI1oQGUUMGg8h9bFuFRevPHhZpLc8DVRYOrOXqpLyL1qq
+
+###
+POST http://localhost:8000/api/sessions
+Content-Type: application/json
+
+{
+    "email": "kvwilson97@gmail.com",
+    "password": "1234567"
+}
+
+
+###
+POST http://localhost:8000/api/users
+Content-Type: application/json
+
+{
+    "name": "Kevin Wilson",
+    "email": "kvwilson97@gmail.com",
+    "password": "1234567",
+    "passwordConfirmation":"1234567"
+
+}
+
