@@ -18,10 +18,14 @@ export async function createProductHandler(
   req: Request<{}, {}, CreateProductType["body"]>,
   res: Response
 ) {
-  const userId = res.locals.user._id;
-  const body = req.body;
-  const product = await createProduct({ ...body, user: userId });
-  return res.send(product);
+  try {
+    const userId = res.locals.user._id;
+    const body = req.body;
+    const product = await createProduct({ ...body, user: userId });
+    return res.send(product);
+  } catch (e) {
+    return res.status(400).json({ success: false, error: e.message });
+  }
 }
 export async function getProductHandler(
   req: Request<GetProductType["params"]>,
