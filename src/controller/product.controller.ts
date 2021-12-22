@@ -23,14 +23,32 @@ export async function createProductHandler(
     const body = req.body;
     const product = await createProduct({ ...body, user: userId });
     return res.send(product);
-  } catch (e) {
+  } catch (e: any) {
     return res.status(400).json({ success: false, error: e.message });
   }
 }
 export async function getProductHandler(
   req: Request<GetProductType["params"]>,
   res: Response
-) {}
+) {
+  try {
+    const productId = req.params.productId;
+
+    const product = await findProduct({ productId });
+    if (!product) {
+      return res.send(404).json({
+        success: false,
+        message: `No product with ID ${productId} foud`,
+      });
+    }
+    return res.status(200).json({ success: true, data: product });
+  } catch (e) {
+    return res.status(400).json({
+      success: "false",
+      message: "Error finding product",
+    });
+  }
+}
 export async function updateProductHandler(
   req: Request<UpdateProductType["params"], any, UpdateProductType["body"]>,
   res: Response
