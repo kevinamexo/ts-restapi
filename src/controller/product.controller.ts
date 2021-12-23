@@ -64,15 +64,18 @@ export async function updateProductHandler(
       return res.sendStatus(404);
     }
 
-    if (product.user !== userId) {
-      return res.sendStatus(403);
+    if (String(product.user) !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: "Only owner of product is allowed to update product",
+      });
     }
     const updatedProduct = await findAndUpdateProduct({ productId }, update, {
       new: true,
     }); //new returns modified document
 
     return res.send(updatedProduct);
-  } catch (e) {
+  } catch (e: any) {
     res.status(400).json({
       success: false,
       message: "Error updating Finding and Updating product",
@@ -83,4 +86,33 @@ export async function updateProductHandler(
 export async function deleteProductHandler(
   req: Request<DeleteProductType["params"]>,
   res: Response
-) {}
+) {
+  try {
+    const productId = req.params.productId;
+    const userId = res.locals.user._id;
+
+    const product = await findProduct({ productId });
+    if (!product) {
+      return res.send(404).json({
+        success: false,
+        message: `No product with ID ${productId} foud`,
+      });
+    }
+    if (String(product.user) !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: "Only owner of product is allowed to delete the product",
+      });
+    }
+    await deleteProduct({ product });
+
+    return res
+      .status(200)
+      .json({ success: true, message: `Product with id ${productId} deleted` });
+  } catch (e: any) {
+    return res.status(400).json({
+      success: false,
+      message: "Error deleting product",
+    });
+  }
+}
